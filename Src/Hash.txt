@@ -1,0 +1,11 @@
+这里是旧版本的源代码或程序
+IBoard-XXX-src为源代码
+IBoard-XXX-bin为程序文件
+
+以下代码均使用GPL-3协议发布。
+
+MD5 Hash:
+IBoard-1.0.0.23101-bin.7z `a881c35b7212a1debb2d4631855de912`
+IBoard-1.0.0.23101-src.7z `2d2f08a28316185319908cb1c7340b67`
+IBoard-1.0.1.24011-bin.7z `638b120cebc41c0cd4e019d6d20fab9f`
+IBoard-1.0.1.24011-src.7z `5b3627497f6a1c79e4d55e4f6f9f50f4`
