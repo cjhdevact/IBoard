@@ -10,6 +10,7 @@ copy %~dp0IBoard\files\1-安装.bat %~dp0IBoard-Bin\1-安装.bat
 copy %~dp0IBoard\files\2-卸载.bat %~dp0IBoard-Bin\2-卸载.bat
 copy %~dp0IBoard\files\3-自动启动管理.bat %~dp0IBoard-Bin\3-自动启动管理.bat
 copy %~dp0IBoard\files\IBoardAdmxs.exe %~dp0IBoard-Bin\IBoardAdmxs.exe
+copy %~dp0IBoard\files\IBoard.xml %~dp0IBoard-Bin\IBoard.xml
 
 echo.
 echo 完成！

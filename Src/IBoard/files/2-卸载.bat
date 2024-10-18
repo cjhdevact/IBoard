@@ -10,6 +10,8 @@
 @echo off
 cls
 title 图片展示小工具卸载程序
+if exist "%windir%\cpadver.bat" echo 检测到当前已安装教室计算机批量配置工具，请使用其安装包来卸载本软件。 & echo 任意键关闭... & pause > nul & goto enda
+if exist "%windir%\csetver.bat" echo 检测到当前已安装计算机批量配置工具，请使用其安装包来卸载本软件。 & echo 任意键关闭... & pause > nul & goto enda
 if "%1" == "/noadm" goto main
 if "%1" == "/?" goto hlp
 fltmc 1>nul 2>nul&& goto main
@@ -105,6 +107,7 @@ echo.
 echo 如果长时间停留在此操作，请检测是否被杀毒软件拦截。
 echo.
 Reg delete HKLM\Software\Microsoft\Windows\CurrentVersion\run /v IBoard /f
+schtasks.exe /Delete /TN \CJH\IBoard /F
 del /q "%windir%\PolicyDefinitions\IBoard.admx"
 del /q "%windir%\PolicyDefinitions\zh-CN\IBoard.adml"
 del /q "%windir%\PolicyDefinitions\en-US\IBoard.adml"
@@ -124,7 +127,6 @@ Reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstal
 Reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\IBoard /v Publisher /f
 Reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\IBoard /v UninstallString /f
 
-cd /d "%windir%"
 rd /s /q "%programfiles%\CJH\IBoard"
 ::dir /a /s /b "%windir%\CJH\" | findstr . >nul && echo. || rd /s /q "%windir%\CJH"
 
@@ -144,6 +146,7 @@ echo.
 echo 如果长时间停留在此操作，请检测是否被杀毒软件拦截。
 echo.
 Reg delete HKLM\Software\Microsoft\Windows\CurrentVersion\run /v IBoard /f
+schtasks.exe /Delete /TN \CJH\IBoard /F
 del /q "%windir%\PolicyDefinitions\IBoard.admx"
 del /q "%windir%\PolicyDefinitions\zh-CN\IBoard.adml"
 del /q "%windir%\PolicyDefinitions\en-US\IBoard.adml"
@@ -163,7 +166,6 @@ Reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstal
 Reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\IBoard /v Publisher /f
 Reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\IBoard /v UninstallString /f
 
-cd /d "%windir%"
 rd /s /q "%programfiles%\CJH\IBoard"
 ::dir /a /s /b "%windir%\CJH" | findstr . >nul && echo. || rd /s /q "%windir%\CJH"
 

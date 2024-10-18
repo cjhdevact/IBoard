@@ -37,6 +37,10 @@ Public Class pfrm
     Public UnSaveData As Integer
     Public DisbFuState As Integer
     Public ShowModeTips As Integer
+    Public SaveLoc As Integer
+    Public BootLoc As New Point
+    Public BootLocErr As Integer
+    'Public FixLoc As Integer
 
     Public scaleX As Single
     Public scaleY As Single
@@ -50,10 +54,28 @@ Public Class pfrm
         If UseMoveV = 1 Then
             ReleaseCapture()
             SendMessage(Me.Handle, WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0)
+            'FixLoc = 1
+            If SaveLoc = 1 Then
+                If UnSaveData = 0 Then
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", Me.Location.X, RegistryValueKind.DWord, "HKCU")
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", Me.Location.Y, RegistryValueKind.DWord, "HKCU")
+                End If
+            End If
         End If
     End Sub
+    Private Sub pfrm_Move(sender As System.Object, e As System.EventArgs) Handles MyBase.Move
+        'FixLoc = 1
+        If SaveLoc = 1 Then
+            If UnSaveData = 0 Then
+                RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", Me.Location.X, RegistryValueKind.DWord, "HKCU")
+                RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", Me.Location.Y, RegistryValueKind.DWord, "HKCU")
+            End If
+        End If
+    End Sub
+ 
     Private Sub PictureBox1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles PictureBox1.MouseDown
         If UseMoveV = 1 Then
+            'FixLoc = 1
             Dim a As New System.Drawing.Point
             a.X = Me.Location.X
             a.Y = Me.Location.Y
@@ -72,6 +94,12 @@ Public Class pfrm
                     'End If
                     'stopwatch.Stop()
                     Call PictureBox1_DoubleClick(sender, e)
+                End If
+            End If
+            If SaveLoc = 1 Then
+                If UnSaveData = 0 Then
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", Me.Location.X, RegistryValueKind.DWord, "HKCU")
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", Me.Location.Y, RegistryValueKind.DWord, "HKCU")
                 End If
             End If
         End If
@@ -102,6 +130,7 @@ Public Class pfrm
         prms.CheckBox2.Enabled = False
         prms.CheckBox3.Enabled = False
         prms.CheckBox4.Enabled = False
+        prms.CheckBox5.Enabled = False
         prms.ComboBox2.Enabled = False
         prms.Button2.Enabled = False
         prms.Button8.Visible = False
@@ -143,7 +172,6 @@ Public Class pfrm
     End Sub
 
     Private Sub pfrm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
         ' 获取当前窗体的 DPI
         Dim currentDpiX As Single = Me.CreateGraphics().DpiX
         Dim currentDpiY As Single = Me.CreateGraphics().DpiY
@@ -304,6 +332,87 @@ Public Class pfrm
                 prms.ComboBox2.SelectedIndex = 1
                 PictureBox1.SizeMode = 1
                 AddReg("Software\CJH\IBoard\Settings", "ImageMode", 1, Microsoft.Win32.RegistryValueKind.DWord, "HKCU")
+            End If
+
+            '////////////////////////////////////////////////////////////////////////////////////
+            '//
+            '//  是否保存位置注册表读取
+            '//
+            '////////////////////////////////////////////////////////////////////////////////////
+
+            If (Not mykey Is Nothing) Then
+                Me.SaveLoc = mykey.GetValue("SaveLocations", -1)
+                If Me.SaveLoc = -1 Then
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "SaveLocations", 0, RegistryValueKind.DWord, "HKCU")
+                    Me.SaveLoc = 0
+                ElseIf Me.SaveLoc > 1 Then
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "SaveLocations", 0, RegistryValueKind.DWord, "HKCU")
+                    Me.SaveLoc = 0
+                End If
+            Else
+                RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "SaveLocations", 0, RegistryValueKind.DWord, "HKCU")
+                Me.SaveLoc = 0
+            End If
+
+            '////////////////////////////////////////////////////////////////////////////////////
+            '//
+            '//  位置注册表读取
+            '//
+            '////////////////////////////////////////////////////////////////////////////////////
+            'Dim a As New Point
+            BootLoc.X = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15
+            BootLoc.Y = 15
+            If SaveLoc = 1 Then
+                Dim aa As Integer
+                Dim ba As Integer
+                If (Not mykey Is Nothing) Then
+                    aa = mykey.GetValue("ImageFormX", -1)
+                    If aa = -1 Then
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, RegistryValueKind.DWord, "HKCU")
+                        aa = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15
+                        BootLocErr = 1
+                    ElseIf aa < -2 - Me.Width Then
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, RegistryValueKind.DWord, "HKCU")
+                        aa = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15
+                        BootLocErr = 1
+                    ElseIf aa > System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width + Me.Width + 2 Then
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, RegistryValueKind.DWord, "HKCU")
+                        aa = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15
+                        BootLocErr = 1
+                    Else
+                        BootLoc.X = aa
+                    End If
+                Else
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, RegistryValueKind.DWord, "HKCU")
+                    aa = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15
+                    BootLocErr = 1
+                End If
+                If (Not mykey Is Nothing) Then
+                    ba = mykey.GetValue("ImageFormY", -1)
+                    If ba = -1 Then
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", 15, RegistryValueKind.DWord, "HKCU")
+                        ba = 15
+                        BootLocErr = 1
+                    ElseIf ba < -2 - Me.Height Then
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", 15, RegistryValueKind.DWord, "HKCU")
+                        ba = 15
+                        BootLocErr = 1
+                    ElseIf ba > System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Height + Me.Height + 2 Then
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", 15, RegistryValueKind.DWord, "HKCU")
+                        ba = 15
+                        BootLocErr = 1
+                    Else
+                        BootLoc.Y = ba
+                    End If
+                Else
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", 15, RegistryValueKind.DWord, "HKCU")
+                    ba = 15
+                    BootLocErr = 1
+                End If
+
+                If Not BootLocErr = 1 Then
+                    Me.Location = BootLoc
+                End If
             End If
 
             '////////////////////////////////////////////////////////////////////////////////////
@@ -510,8 +619,35 @@ Public Class pfrm
             pst = 1
             Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
             FlowLayoutPanel1.Visible = False
-            Me.Location = New Point(SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, 15)
+            'Me.Location = New Point(SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, 15)
+            If SaveLoc = 0 Then
+                BootLoc = New Point(SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, 15)
+                Me.Location = BootLoc
+            ElseIf SaveLoc = 1 And BootLocErr = 1 Then
+                BootLoc = New Point(SystemInformation.PrimaryMonitorSize.Width - Me.Width - 15, 15)
+                Me.Location = BootLoc
+                If UnSaveData = 0 Then
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", Me.Location.X, RegistryValueKind.DWord, "HKCU")
+                    RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", Me.Location.Y, RegistryValueKind.DWord, "HKCU")
+                End If
+            End If
+        Else
+            If BootLocErr = 1 Then
+                If SaveLoc = 1 Then
+                    BootLoc = New Point((SystemInformation.PrimaryMonitorSize.Width - Me.Width) / 2, (SystemInformation.PrimaryMonitorSize.Height - Me.Height) / 2)
+                    Me.Location = BootLoc
+                    If UnSaveData = 0 Then
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormX", Me.Location.X, RegistryValueKind.DWord, "HKCU")
+                        RegKeyModule.AddReg("Software\CJH\IBoard\Settings", "ImageFormY", Me.Location.Y, RegistryValueKind.DWord, "HKCU")
+                    End If
+                Else
+                    BootLoc = New Point((SystemInformation.PrimaryMonitorSize.Width - Me.Width) / 2, (SystemInformation.PrimaryMonitorSize.Height - Me.Height) / 2)
+                    Me.Location = BootLoc
+                End If
+            End If
         End If
+        'FixLoc = 0
+        'Timer1.Enabled = True
     End Sub
 
     Sub LoadImage(ByVal pfile1 As String)
@@ -635,4 +771,17 @@ Public Class pfrm
             Me.Show()
         End If
     End Sub
+
+    'Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
+    '    'If SaveLoc = 0 Then
+    '    If FixLoc = 0 Then
+    '        If Me.Location.X <> BootLoc.X Or Me.Location.Y <> BootLoc.Y Then
+    '            Me.Location = BootLoc
+    '        End If
+    '    Else
+    '        MsgBox(1)
+    '        Timer1.Enabled = False
+    '    End If
+    '    'End If
+    'End Sub
 End Class

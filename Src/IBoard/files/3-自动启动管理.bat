@@ -83,14 +83,19 @@ echo.
 echo         1  添加自动启动
 echo         2  删除自动启动
 echo.
-echo         3  退出
+echo         3  添加自动启动（任务计划模式）
+echo         4  删除自动启动（任务计划模式）
+echo.
+echo         5  退出
 echo.
 echo ========================================================
 echo.
 set /p chooice=请输入对应的数字以执行相应的操作：
 if "%chooice%" == "1" goto ad1
 if "%chooice%" == "2" goto de1
-if "%chooice%" == "3" goto enda
+if "%chooice%" == "3" goto ad2
+if "%chooice%" == "4" goto del2
+if "%chooice%" == "5" goto enda
 echo.
 echo 无效的选项，任意键返回。 & pause >nul
 goto main
@@ -110,6 +115,25 @@ echo ====================================================
 echo             图片展示小工具自动启动管理
 echo ===================================================
 Reg delete HKLM\Software\Microsoft\Windows\CurrentVersion\run /v IBoard /f
+echo 删除成功，任意键返回... & pause > nul
+goto main
+
+:ad2
+cls
+echo ====================================================
+echo             图片展示小工具自动启动管理
+echo ====================================================
+schtasks.exe /Delete /TN \CJH\IBoard /F
+schtasks.exe /create /tn \CJH\IBoard /xml "%~dp0IBoard.xml"
+echo 添加成功，任意键返回... & pause > nul
+goto main
+
+:de12
+cls
+echo ====================================================
+echo             图片展示小工具自动启动管理
+echo ===================================================
+schtasks.exe /Delete /TN \CJH\IBoard /F
 echo 删除成功，任意键返回... & pause > nul
 goto main
 

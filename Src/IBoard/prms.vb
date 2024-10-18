@@ -63,6 +63,11 @@ Public Class prms
         Else
             Me.CheckBox4.Checked = False
         End If
+        If pfrm.SaveLoc = 1 Then
+            Me.CheckBox5.Checked = True
+        Else
+            Me.CheckBox5.Checked = False
+        End If
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
@@ -323,6 +328,20 @@ Public Class prms
             End If
             System.Diagnostics.Process.Start(Application.ExecutablePath, Command)
             End
+        End If
+    End Sub
+
+    Private Sub CheckBox5_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox5.CheckedChanged
+        If CheckBox5.Checked = False Then
+            pfrm.SaveLoc = 0
+            If pfrm.UnSaveData = 0 Then
+                AddReg("Software\CJH\IBoard\Settings", "SaveLocations", 0, RegistryValueKind.DWord, "HKCU")
+            End If
+        Else
+            pfrm.SaveLoc = 1
+            If pfrm.UnSaveData = 0 Then
+                AddReg("Software\CJH\IBoard\Settings", "SaveLocations", 1, RegistryValueKind.DWord, "HKCU")
+            End If
         End If
     End Sub
 End Class

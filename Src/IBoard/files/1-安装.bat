@@ -10,6 +10,8 @@
 @echo off
 cls
 title 图片展示小工具安装程序
+if exist "%windir%\cpadver.bat" echo 检测到当前已安装教室计算机批量配置工具，请使用其安装包来卸载本软件。 & echo 任意键关闭... & pause > nul & goto enda
+if exist "%windir%\csetver.bat" echo 检测到当前已安装计算机批量配置工具，请使用其安装包来卸载本软件。 & echo 任意键关闭... & pause > nul & goto enda
 if "%1" == "/noadm" goto main
 if "%1" == "/?" goto hlp
 fltmc 1>nul 2>nul&& goto main
@@ -115,7 +117,7 @@ if errorlevel 2 set ac=2
 if "%ac%" == "1" if exist "%windir%\PolicyDefinitions\*.admx" call "%~dp0IBoardAdmxs.exe"
 
 echo.
-choice /C YN /T 5 /D Y /M "是(Y)否(N)要创建快捷方式到开始菜单（5秒后自动选择Y）"
+choice /C YN /T 5 /D Y /M "是(Y)否(N)要创建快捷方式（5秒后自动选择Y）"
 if errorlevel 1 set ad=1
 if errorlevel 2 set ad=2
 if "%ad%" == "1" if not exist "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\图片展示小工具" md "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\图片展示小工具"
@@ -128,6 +130,7 @@ if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell
 
 copy /y "%~dp02-卸载.bat" "%programfiles%\CJH\IBoard\Uninstall.bat"
 copy /y "%~dp03-自动启动管理.bat" "%programfiles%\CJH\IBoard\AutoBootMgr.bat"
+copy /y "%~dp0IBoard.xml" "%programfiles%\CJH\IBoard\IBoard.xml"
 
 if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell""):Set b=a.CreateShortcut(""%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\图片展示小工具\管理自动启动.lnk""):b.TargetPath=""%programfiles%\CJH\IBoard\AutoBootMgr.bat"":b.IconLocation=""%programfiles%\CJH\IBoard\IBoard.exe"":b.WorkingDirectory=""%programfiles%\CJH\IBoard"":b.Save:close")
 
@@ -172,7 +175,7 @@ if errorlevel 2 set ac=2
 if "%ac%" == "1" if exist "%windir%\PolicyDefinitions\*.admx" call "%~dp0IBoardAdmxs.exe"
 
 echo.
-choice /C YN /T 5 /D Y /M "是(Y)否(N)要创建快捷方式到开始菜单（5秒后自动选择Y）"
+choice /C YN /T 5 /D Y /M "是(Y)否(N)要创建快捷方式（5秒后自动选择Y）"
 if errorlevel 1 set ad=1
 if errorlevel 2 set ad=2
 if "%ad%" == "1" if not exist "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\图片展示小工具" md "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\图片展示小工具"
@@ -187,6 +190,7 @@ if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell
 
 copy /y "%~dp02-卸载.bat" "%programfiles%\CJH\IBoard\Uninstall.bat"
 copy /y "%~dp03-自动启动管理.bat" "%programfiles%\CJH\IBoard\AutoBootMgr.bat"
+copy /y "%~dp0IBoard.xml" "%programfiles%\CJH\IBoard\IBoard.xml"
 
 if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell""):Set b=a.CreateShortcut(""%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\图片展示小工具\管理自动启动.lnk""):b.TargetPath=""%programfiles%\CJH\IBoard\AutoBootMgr.bat"":b.IconLocation=""%programfiles%\CJH\IBoard\IBoard.exe"":b.WorkingDirectory=""%programfiles%\CJH\IBoard"":b.Save:close")
 
