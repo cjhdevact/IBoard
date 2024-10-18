@@ -30,6 +30,10 @@
 
 ![设置界面](Assets/SettingUI.png)
 
+## 相关项目
+
+[UsefulControl](https://github.com/cjhdevact/UsefulControl) - 实用小工具的整合项目（包括本项目的功能）
+
 ## License
 
 本程序基于`GPL-3.0`协议授权。
