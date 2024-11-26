@@ -106,6 +106,8 @@ echo ====================================================
 echo             图片展示小工具自动启动管理
 echo ====================================================
 Reg add HKLM\Software\Microsoft\Windows\CurrentVersion\run /v IBoard /t REG_SZ /d "%programfiles%\CJH\IBoard\IBoard.exe" /f
+schtasks.exe /Delete /TN \CJH\IBoard /F
+echo 由于通过任务计划启动方式与资源管理器加载自启动方式冲突，已删除通过通过任务计划自启动方式。
 echo 添加成功，任意键返回... & pause > nul
 goto main
 
@@ -125,6 +127,8 @@ echo             图片展示小工具自动启动管理
 echo ====================================================
 schtasks.exe /Delete /TN \CJH\IBoard /F
 schtasks.exe /create /tn \CJH\IBoard /xml "%~dp0IBoard.xml"
+Reg delete HKLM\Software\Microsoft\Windows\CurrentVersion\run /v IBoard /f
+echo 由于通过资源管理器加载自启动方式与任务计划启动方式冲突，已删除通过资源管理器加载自启动方式。
 echo 添加成功，任意键返回... & pause > nul
 goto main
 
