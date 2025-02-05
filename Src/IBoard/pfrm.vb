@@ -1,6 +1,6 @@
 ﻿'****************************************************************************
 '    IBoard
-'    Copyright (C) 2023-2024  CJH
+'    Copyright (C) 2023-2025  CJH
 '
 '    This program is free software: you can redistribute it and/or modify
 '    it under the terms of the GNU General Public License as published by
@@ -44,6 +44,20 @@ Public Class pfrm
 
     Public scaleX As Single
     Public scaleY As Single
+
+    '在Alt+Tab中隐藏
+    Const WS_EX_COMPOSITED = &H2000000 '0x02000000
+    'Const WS_EX_NOACTIVATE = &H8000000 '0x08000000
+    Const WS_EX_TOOLWINDOW = &H80 '0x00000080
+    'Const WS_EX_TRANSPARENT = &H20 '0x00000020
+    Protected Overrides ReadOnly Property CreateParams As CreateParams
+        Get
+            Dim cp As CreateParams = MyBase.CreateParams
+            cp.ExStyle = cp.ExStyle Or WS_EX_TOOLWINDOW Or WS_EX_COMPOSITED
+            Return cp
+        End Get
+    End Property
+
     'API移动窗体
     Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As IntPtr, ByVal wMsg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Boolean
     Declare Function ReleaseCapture Lib "user32" Alias "ReleaseCapture" () As Boolean

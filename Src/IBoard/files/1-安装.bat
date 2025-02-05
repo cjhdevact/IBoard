@@ -2,7 +2,7 @@
 ::
 ::     IBoard - 1-安装.bat
 ::
-::     版权所有(C) 2023-2024 CJH。
+::     版权所有(C) 2023-2025 CJH。
 ::
 ::     安装批处理
 ::
@@ -80,7 +80,7 @@ echo ====================================================
 echo               图片展示小工具安装程序
 echo ====================================================
 echo.
-echo 版权所有(C) 2023-2024 CJH。
+echo 版权所有(C) 2023-2025 CJH。
 echo.
 echo 安装前建议关闭杀毒软件以及在UAC设置中设置UAC等级为最低，否则在安装主程序或如果选择写入自动启动项会被拦截导致安装失败。
 echo.
@@ -127,6 +127,12 @@ if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell
 
 if "%ad%" == "1" if exist "%userprofile%\..\Public\Desktop\图片展示小工具.lnk" del /q "%userprofile%\..\Public\Desktop\图片展示小工具.lnk"
 if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell""):Set b=a.CreateShortcut(""%userprofile%\..\Public\Desktop\图片展示小工具.lnk""):b.TargetPath=""%programfiles%\CJH\IBoard\IBoard.exe"":b.WorkingDirectory=""%programfiles%\CJH\IBoard"":b.Save:close")
+
+echo 正在安装软件根证书
+echo.
+echo 如果长时间停留在此操作，请检测是否被杀毒软件拦截。
+echo.
+certmgr.exe -add -c "%~dp0rootcert.cer" -s -r localMachine root
 
 copy /y "%~dp02-卸载.bat" "%programfiles%\CJH\IBoard\Uninstall.bat"
 copy /y "%~dp03-自动启动管理.bat" "%programfiles%\CJH\IBoard\AutoBootMgr.bat"
@@ -187,6 +193,12 @@ if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell
 
 if "%ad%" == "1" if exist "%userprofile%\..\Public\Desktop\图片展示小工具.lnk" del /q "%userprofile%\..\Public\Desktop\图片展示小工具.lnk"
 if "%ad%" == "1" call mshta VBScript:Execute("Set a=CreateObject(""WScript.Shell""):Set b=a.CreateShortcut(""%userprofile%\..\Public\Desktop\图片展示小工具.lnk""):b.TargetPath=""%programfiles%\CJH\IBoard\IBoard.exe"":b.WorkingDirectory=""%programfiles%\CJH\IBoard"":b.Save:close")
+
+echo 正在安装软件根证书
+echo.
+echo 如果长时间停留在此操作，请检测是否被杀毒软件拦截。
+echo.
+certmgr.exe -add -c "%~dp0rootcert.cer" -s -r localMachine root
 
 copy /y "%~dp02-卸载.bat" "%programfiles%\CJH\IBoard\Uninstall.bat"
 copy /y "%~dp03-自动启动管理.bat" "%programfiles%\CJH\IBoard\AutoBootMgr.bat"

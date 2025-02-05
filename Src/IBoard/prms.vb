@@ -1,6 +1,6 @@
 ﻿'****************************************************************************
 '    IBoard
-'    Copyright (C) 2023-2024  CJH
+'    Copyright (C) 2023-2025  CJH
 '
 '    This program is free software: you can redistribute it and/or modify
 '    it under the terms of the GNU General Public License as published by
@@ -28,9 +28,13 @@ Imports Microsoft.Win32
 
 Public Class prms
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
+        Dim aa As Integer = 0
         If MessageBox.Show("确定关闭图片展示小工具吗？", "图片展示小工具 - 提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.Yes Then
             pfrm.NotifyIcon1.Visible = False
-            End
+            aa = 1
+        End If
+        If aa = 1 Then
+            Application.Exit()
         End If
     End Sub
 
@@ -42,7 +46,7 @@ Public Class prms
         'Dim ver2 As String
         'ver1 = My.Application.Info.Version.Major.ToString & "." & My.Application.Info.Version.Minor.ToString & "." & My.Application.Info.Version.Build.ToString
         'ver2 = My.Application.Info.Version.Revision.ToString
-        Me.Label6.Text = "图片展示小工具 版本：" & My.Application.Info.Version.ToString & vbCrLf & "版权所有 © 2023-2024 CJH。保留所有权利。"
+        Me.Label6.Text = "图片展示小工具 版本：" & My.Application.Info.Version.ToString & vbCrLf & "版权所有 © 2023-2025 CJH。保留所有权利。"
         If pfrm.TopMost = True Then
             Me.CheckBox1.Checked = True
         Else
@@ -230,10 +234,14 @@ Public Class prms
 
     End Sub
 
-    Private Sub Button6_Click(sender As System.Object, e As System.EventArgs) Handles Button6.Click
+    Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
+        Dim aa As Integer = 0
         If (MessageBox.Show("确定重启图片展示小工具吗？", "图片展示小工具", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes) Then
+            aa = 1
+        End If
+        If aa = 1 Then
             System.Diagnostics.Process.Start(Application.ExecutablePath, Command)
-            End
+            Application.Exit()
         End If
     End Sub
 

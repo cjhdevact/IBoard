@@ -1,0 +1,9 @@
+/Src/.vs/
+
+/Src/*.suo
+
+/Src/IBoard-bin/
+
+/Src/IBoard/bin/
+
+/Src/IBoard/obj/
