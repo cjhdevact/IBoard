@@ -25,6 +25,7 @@
 '*                                                     *
 '\*****************************************************/
 Imports Microsoft.Win32
+Imports System.Runtime.InteropServices
 
 Public Class pfrm
     Public pfile As String
@@ -40,6 +41,7 @@ Public Class pfrm
     Public SaveLoc As Integer
     Public BootLoc As New Point
     Public BootLocErr As Integer
+    Public NeedStillTopMost As Integer '是否强制顶置
     'Public FixLoc As Integer
 
     Public scaleX As Single
@@ -77,7 +79,7 @@ Public Class pfrm
             End If
         End If
     End Sub
-    Private Sub pfrm_Move(sender As System.Object, e As System.EventArgs) Handles MyBase.Move
+    Private Sub pfrm_Move(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Move
         'FixLoc = 1
         If SaveLoc = 1 Then
             If UnSaveData = 0 Then
@@ -86,7 +88,7 @@ Public Class pfrm
             End If
         End If
     End Sub
- 
+
     Private Sub PictureBox1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles PictureBox1.MouseDown
         If UseMoveV = 1 Then
             'FixLoc = 1
@@ -120,7 +122,9 @@ Public Class pfrm
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        NeedStillTopMost = 0
         prms.ShowDialog()
+        NeedStillTopMost = 1
     End Sub
 
     Private Sub PictureBox1_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PictureBox1.DoubleClick
@@ -186,6 +190,8 @@ Public Class pfrm
     End Sub
 
     Private Sub pfrm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        NeedStillTopMost = 1
+        Timer1.Enabled = True
         ' 获取当前窗体的 DPI
         Dim currentDpiX As Single = Me.CreateGraphics().DpiX
         Dim currentDpiY As Single = Me.CreateGraphics().DpiY
@@ -762,13 +768,13 @@ Public Class pfrm
         NotifyIcon1.Visible = False
     End Sub
 
-    Private Sub NotifyIcon1_MouseDoubleClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
+    Private Sub NotifyIcon1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
         Me.Hsate = 0
         CHide.Text = "隐藏(&H)"
         Me.Show()
     End Sub
 
-    Private Sub CHide_Click(sender As System.Object, e As System.EventArgs) Handles CHide.Click
+    Private Sub CHide_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CHide.Click
         If Hsate = 0 Then
             Me.Hsate = 1
             CHide.Text = "显示(&S)"
@@ -798,4 +804,23 @@ Public Class pfrm
     '    End If
     '    'End If
     'End Sub
+
+    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        If Me.TopMost = True Then
+            If Me.Visible = True Then
+                If NeedStillTopMost = 1 Then
+                    SetWindowPos(Me.Handle, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS)
+                End If
+            End If
+        End If
+    End Sub
+
+    <DllImport("user32.dll")>
+    Private Shared Function SetWindowPos(ByVal hWnd As IntPtr, ByVal hWndInsertAfter As IntPtr, ByVal X As Integer, ByVal Y As Integer, ByVal cx As Integer, ByVal cy As Integer, ByVal uFlags As UInteger) As Boolean
+    End Function
+    Const HWND_TOPMOST = -1
+    Const SWP_NOSIZE As UInteger = &H1
+    Const SWP_NOMOVE As UInteger = &H2
+    Const TOPMOST_FLAGS As UInteger = SWP_NOMOVE Or SWP_NOSIZE
+
 End Class
