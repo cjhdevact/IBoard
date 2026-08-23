@@ -56,6 +56,7 @@ Partial Class prms
         Me.CheckBox4 = New System.Windows.Forms.CheckBox()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.CheckBox5 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox6 = New System.Windows.Forms.CheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -65,7 +66,7 @@ Partial Class prms
         Me.Button3.Location = New System.Drawing.Point(25, 120)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(110, 27)
-        Me.Button3.TabIndex = 2
+        Me.Button3.TabIndex = 0
         Me.Button3.Text = "打开图片(&O)"
         Me.Button3.UseVisualStyleBackColor = False
         '
@@ -73,10 +74,10 @@ Partial Class prms
         '
         Me.Button4.BackColor = System.Drawing.Color.Maroon
         Me.Button4.ForeColor = System.Drawing.Color.White
-        Me.Button4.Location = New System.Drawing.Point(30, 435)
+        Me.Button4.Location = New System.Drawing.Point(30, 457)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(110, 27)
-        Me.Button4.TabIndex = 3
+        Me.Button4.TabIndex = 11
         Me.Button4.Text = "退出(&X)"
         Me.Button4.UseVisualStyleBackColor = False
         '
@@ -98,17 +99,17 @@ Partial Class prms
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.Size = New System.Drawing.Size(341, 27)
-        Me.TextBox1.TabIndex = 5
+        Me.TextBox1.TabIndex = 2
         Me.TextBox1.TabStop = False
         '
         'Button1
         '
         Me.Button1.BackColor = System.Drawing.Color.Transparent
         Me.Button1.ForeColor = System.Drawing.Color.Black
-        Me.Button1.Location = New System.Drawing.Point(282, 632)
+        Me.Button1.Location = New System.Drawing.Point(282, 654)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(173, 27)
-        Me.Button1.TabIndex = 6
+        Me.Button1.TabIndex = 19
         Me.Button1.Text = "关闭(&C)"
         Me.Button1.UseVisualStyleBackColor = False
         '
@@ -146,7 +147,7 @@ Partial Class prms
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("微软雅黑", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label4.Location = New System.Drawing.Point(16, 413)
+        Me.Label4.Location = New System.Drawing.Point(16, 435)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(39, 19)
         Me.Label4.TabIndex = 10
@@ -156,7 +157,7 @@ Partial Class prms
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("微软雅黑", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label5.Location = New System.Drawing.Point(16, 465)
+        Me.Label5.Location = New System.Drawing.Point(16, 487)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(39, 19)
         Me.Label5.TabIndex = 11
@@ -166,7 +167,7 @@ Partial Class prms
         '
         Me.Label6.BackColor = System.Drawing.Color.White
         Me.Label6.ForeColor = System.Drawing.Color.Black
-        Me.Label6.Location = New System.Drawing.Point(22, 492)
+        Me.Label6.Location = New System.Drawing.Point(22, 514)
         Me.Label6.Name = "Label6"
         Me.Label6.Padding = New System.Windows.Forms.Padding(3)
         Me.Label6.Size = New System.Drawing.Size(420, 67)
@@ -176,10 +177,10 @@ Partial Class prms
         'Button2
         '
         Me.Button2.BackColor = System.Drawing.Color.Transparent
-        Me.Button2.Location = New System.Drawing.Point(100, 341)
+        Me.Button2.Location = New System.Drawing.Point(100, 363)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(144, 30)
-        Me.Button2.TabIndex = 14
+        Me.Button2.TabIndex = 9
         Me.Button2.Text = "设置背景颜色"
         Me.Button2.UseVisualStyleBackColor = False
         '
@@ -192,10 +193,10 @@ Partial Class prms
         '
         Me.Button5.BackColor = System.Drawing.Color.Transparent
         Me.Button5.ForeColor = System.Drawing.Color.Black
-        Me.Button5.Location = New System.Drawing.Point(150, 435)
+        Me.Button5.Location = New System.Drawing.Point(150, 457)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(110, 27)
-        Me.Button5.TabIndex = 15
+        Me.Button5.TabIndex = 12
         Me.Button5.Text = "隐藏(&H)"
         Me.Button5.UseVisualStyleBackColor = False
         '
@@ -213,7 +214,7 @@ Partial Class prms
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(25, 346)
+        Me.Label8.Location = New System.Drawing.Point(25, 368)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(69, 20)
         Me.Label8.TabIndex = 20
@@ -222,7 +223,7 @@ Partial Class prms
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(25, 381)
+        Me.Label9.Location = New System.Drawing.Point(25, 403)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(99, 20)
         Me.Label9.TabIndex = 21
@@ -236,29 +237,29 @@ Partial Class prms
         Me.ComboBox2.ForeColor = System.Drawing.Color.Black
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Items.AddRange(New Object() {"原始大小", "窗口缩放", "原始大小（AutoSize模式）", "居中显示", "等比例缩放"})
-        Me.ComboBox2.Location = New System.Drawing.Point(130, 378)
+        Me.ComboBox2.Location = New System.Drawing.Point(130, 400)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(208, 28)
-        Me.ComboBox2.TabIndex = 22
+        Me.ComboBox2.TabIndex = 10
         '
         'CheckBox2
         '
         Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Location = New System.Drawing.Point(29, 263)
+        Me.CheckBox2.Location = New System.Drawing.Point(29, 285)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(148, 24)
-        Me.CheckBox2.TabIndex = 23
+        Me.CheckBox2.TabIndex = 6
         Me.CheckBox2.Text = "允许拖动图片移动"
         Me.CheckBox2.UseVisualStyleBackColor = True
         '
         'Button6
         '
         Me.Button6.ForeColor = System.Drawing.Color.Black
-        Me.Button6.Location = New System.Drawing.Point(271, 435)
+        Me.Button6.Location = New System.Drawing.Point(271, 457)
         Me.Button6.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(126, 27)
-        Me.Button6.TabIndex = 24
+        Me.Button6.TabIndex = 13
         Me.Button6.Text = "重启本程序(&R)"
         Me.Button6.UseVisualStyleBackColor = True
         '
@@ -268,7 +269,7 @@ Partial Class prms
         Me.CheckBox3.Location = New System.Drawing.Point(28, 187)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(393, 24)
-        Me.CheckBox3.TabIndex = 25
+        Me.CheckBox3.TabIndex = 3
         Me.CheckBox3.Text = "加载上一次打开的图片(当没有加载ShowImage图片时)"
         Me.CheckBox3.UseVisualStyleBackColor = True
         '
@@ -279,7 +280,7 @@ Partial Class prms
         Me.Button7.Location = New System.Drawing.Point(141, 120)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(110, 27)
-        Me.Button7.TabIndex = 26
+        Me.Button7.TabIndex = 1
         Me.Button7.Text = "清除(&C)"
         Me.Button7.UseVisualStyleBackColor = False
         '
@@ -308,10 +309,10 @@ Partial Class prms
         '
         Me.LinkLabel3.AutoSize = True
         Me.LinkLabel3.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel3.Location = New System.Drawing.Point(234, 603)
+        Me.LinkLabel3.Location = New System.Drawing.Point(234, 625)
         Me.LinkLabel3.Name = "LinkLabel3"
         Me.LinkLabel3.Size = New System.Drawing.Size(69, 20)
-        Me.LinkLabel3.TabIndex = 61
+        Me.LinkLabel3.TabIndex = 17
         Me.LinkLabel3.TabStop = True
         Me.LinkLabel3.Text = "帮助说明"
         '
@@ -319,10 +320,10 @@ Partial Class prms
         '
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel2.Location = New System.Drawing.Point(101, 603)
+        Me.LinkLabel2.Location = New System.Drawing.Point(101, 625)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(69, 20)
-        Me.LinkLabel2.TabIndex = 59
+        Me.LinkLabel2.TabIndex = 15
         Me.LinkLabel2.TabStop = True
         Me.LinkLabel2.Text = "反馈问题"
         '
@@ -330,10 +331,10 @@ Partial Class prms
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel1.Location = New System.Drawing.Point(26, 603)
+        Me.LinkLabel1.Location = New System.Drawing.Point(26, 625)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(69, 20)
-        Me.LinkLabel1.TabIndex = 58
+        Me.LinkLabel1.TabIndex = 14
         Me.LinkLabel1.TabStop = True
         Me.LinkLabel1.Text = "项目主页"
         '
@@ -341,17 +342,17 @@ Partial Class prms
         '
         Me.LinkLabel4.AutoSize = True
         Me.LinkLabel4.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel4.Location = New System.Drawing.Point(176, 603)
+        Me.LinkLabel4.Location = New System.Drawing.Point(176, 625)
         Me.LinkLabel4.Name = "LinkLabel4"
         Me.LinkLabel4.Size = New System.Drawing.Size(52, 20)
-        Me.LinkLabel4.TabIndex = 60
+        Me.LinkLabel4.TabIndex = 16
         Me.LinkLabel4.TabStop = True
         Me.LinkLabel4.Text = "GPL-3"
         '
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(26, 559)
+        Me.Label19.Location = New System.Drawing.Point(26, 581)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(429, 40)
         Me.Label19.TabIndex = 62
@@ -360,40 +361,51 @@ Partial Class prms
         'CheckBox4
         '
         Me.CheckBox4.AutoSize = True
-        Me.CheckBox4.Location = New System.Drawing.Point(29, 288)
+        Me.CheckBox4.Location = New System.Drawing.Point(29, 310)
         Me.CheckBox4.Name = "CheckBox4"
         Me.CheckBox4.Size = New System.Drawing.Size(88, 24)
-        Me.CheckBox4.TabIndex = 63
+        Me.CheckBox4.TabIndex = 7
         Me.CheckBox4.Text = "允许拖放"
         Me.CheckBox4.UseVisualStyleBackColor = True
         '
         'Button8
         '
         Me.Button8.ForeColor = System.Drawing.Color.Black
-        Me.Button8.Location = New System.Drawing.Point(22, 632)
+        Me.Button8.Location = New System.Drawing.Point(22, 654)
         Me.Button8.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(148, 27)
-        Me.Button8.TabIndex = 64
+        Me.Button8.TabIndex = 18
         Me.Button8.Text = "恢复默认设置(&D)"
         Me.Button8.UseVisualStyleBackColor = True
         '
         'CheckBox5
         '
         Me.CheckBox5.AutoSize = True
-        Me.CheckBox5.Location = New System.Drawing.Point(29, 314)
+        Me.CheckBox5.Location = New System.Drawing.Point(29, 336)
         Me.CheckBox5.Name = "CheckBox5"
         Me.CheckBox5.Size = New System.Drawing.Size(418, 24)
-        Me.CheckBox5.TabIndex = 65
+        Me.CheckBox5.TabIndex = 8
         Me.CheckBox5.Text = "保存窗口位置（自动加载模式将会使用上一次保存的位置）"
         Me.CheckBox5.UseVisualStyleBackColor = True
+        '
+        'CheckBox6
+        '
+        Me.CheckBox6.AutoSize = True
+        Me.CheckBox6.Location = New System.Drawing.Point(29, 260)
+        Me.CheckBox6.Name = "CheckBox6"
+        Me.CheckBox6.Size = New System.Drawing.Size(326, 24)
+        Me.CheckBox6.TabIndex = 5
+        Me.CheckBox6.Text = "使用 UIAccess 权限顶置（需要管理员权限）"
+        Me.CheckBox6.UseVisualStyleBackColor = True
         '
         'prms
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(470, 669)
+        Me.ClientSize = New System.Drawing.Size(470, 692)
+        Me.Controls.Add(Me.CheckBox6)
         Me.Controls.Add(Me.CheckBox5)
         Me.Controls.Add(Me.Button8)
         Me.Controls.Add(Me.CheckBox4)
@@ -474,4 +486,5 @@ Partial Class prms
     Friend WithEvents CheckBox4 As System.Windows.Forms.CheckBox
     Friend WithEvents Button8 As System.Windows.Forms.Button
     Friend WithEvents CheckBox5 As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBox6 As System.Windows.Forms.CheckBox
 End Class

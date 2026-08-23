@@ -1,6 +1,6 @@
 ﻿'****************************************************************************
 '    IBoard
-'    Copyright (C) 2023-2025  CJH
+'    Copyright (C) 2023-2026  CJH
 '
 '    This program is free software: you can redistribute it and/or modify
 '    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 '*                                                     *
 '\*****************************************************/
 Imports Microsoft.Win32
+Imports System.IO
 
 Public Class prms
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
@@ -38,6 +39,37 @@ Public Class prms
         End If
     End Sub
 
+
+    '获取编译时间函数
+    Private Function GetPe32Time(ByVal fileName As String) As DateTime
+        Dim num As Integer
+        Using reader As BinaryReader = New BinaryReader(New FileStream(fileName, FileMode.Open, FileAccess.Read))
+            Dim buffer As Byte() = reader.ReadBytes(2)
+            Dim message As String = "Error in PE32 file."
+            If (buffer.Length <> 2) Then
+                'Throw New Exception(message)
+            End If
+            If ((buffer(0) <> &H4D) OrElse (buffer(1) <> 90)) Then
+                'Throw New Exception(message)
+            End If
+            reader.BaseStream.Seek(60, SeekOrigin.Begin)
+            Dim num2 As Byte = reader.ReadByte
+            reader.BaseStream.Seek(CLng(num2), SeekOrigin.Begin)
+            buffer = reader.ReadBytes(4)
+            If (buffer.Length <> 4) Then
+                'Throw New Exception(message)
+            End If
+            If ((((buffer(0) <> 80) OrElse (buffer(1) <> &H45)) OrElse (buffer(2) <> 0)) OrElse (buffer(3) <> 0)) Then
+                'Throw New Exception(message)
+            End If
+            If (reader.ReadBytes(4).Length <> 4) Then
+                'Throw New Exception(message)
+            End If
+            num = reader.ReadInt32
+        End Using
+        Return DateTime.SpecifyKind(New DateTime(&H7B2, 1, 1), DateTimeKind.Utc).AddSeconds(CDbl(num)).ToLocalTime
+    End Function
+
     Private Sub prms_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         OpenFileDialog1.Filter = "所有支持的文件 (*.png;*.jpg;*.jpeg;*.jpe;*.jfif;*.bmp;*.dib;*.gif;*.tif;*.tiff;*.ico)|*.png;*.jpg;*.jpeg;*.jpe;*.jfif;*.bmp;*.dib;*.gif;*.tif;*.tiff;*.ico|" _
                               & "PNG 图像 (*.png)|*.png|JPEG 文件 (*.jpg;*.jpeg;*.jpe;*.jfif)|*.jpg;*.jpeg;*.jpe;*.jfif|" _
@@ -46,7 +78,7 @@ Public Class prms
         'Dim ver2 As String
         'ver1 = My.Application.Info.Version.Major.ToString & "." & My.Application.Info.Version.Minor.ToString & "." & My.Application.Info.Version.Build.ToString
         'ver2 = My.Application.Info.Version.Revision.ToString
-        Me.Label6.Text = "图片展示小工具 版本：" & My.Application.Info.Version.ToString & vbCrLf & "版权所有 © 2023-2025 CJH。保留所有权利。"
+        Me.Label6.Text = "图片展示小工具 版本：" & My.Application.Info.Version.ToString & vbCrLf & "编译时间：" & GetPe32Time(Application.ExecutablePath) & vbCrLf & "版权所有 © 2023-2026 CJH。保留所有权利。"
         If pfrm.TopMost = True Then
             Me.CheckBox1.Checked = True
         Else
@@ -169,7 +201,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox1.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged
         If Me.CheckBox1.Checked = True Then
             pfrm.TopMost = True
             Me.TopMost = True
@@ -185,11 +217,11 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         Me.Close()
     End Sub
 
-    Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
         If ColorDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
             pfrm.BackColor = Me.ColorDialog1.Color
             If pfrm.UnSaveData = 0 Then
@@ -200,7 +232,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub Button5_Click(sender As System.Object, e As System.EventArgs) Handles Button5.Click
+    Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
         If pfrm.pfile <> "" Then
             pfrm.Hide()
             pfrm.Hsate = 1
@@ -216,7 +248,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub ComboBox2_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles ComboBox2.SelectedIndexChanged
+    Private Sub ComboBox2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox2.SelectedIndexChanged
         If ComboBox2.SelectedIndex = 0 Then
             pfrm.PictureBox1.SizeMode = PictureBoxSizeMode.Normal
         ElseIf ComboBox2.SelectedIndex = 1 Then
@@ -245,7 +277,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub Button7_Click(sender As System.Object, e As System.EventArgs) Handles Button7.Click
+    Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         pfrm.PictureBox1.Image = Nothing
         TextBox1.Text = ""
         pfrm.CFileState.Text = "未打开文件。"
@@ -258,7 +290,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub CheckBox2_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox2.CheckedChanged
+    Private Sub CheckBox2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox2.CheckedChanged
         If CheckBox2.Checked = False Then
             'CheckBox2.Checked = False
             pfrm.UseMoveV = 0
@@ -274,7 +306,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub CheckBox3_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox3.CheckedChanged
+    Private Sub CheckBox3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox3.CheckedChanged
         If CheckBox3.Checked = False Then
             pfrm.LoadLastImage = 0
             If pfrm.UnSaveData = 0 Then
@@ -289,15 +321,15 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub LinkLabel1_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+    Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         System.Diagnostics.Process.Start("https://github.com/cjhdevact/IBoard")
     End Sub
 
-    Private Sub LinkLabel2_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+    Private Sub LinkLabel2_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
         System.Diagnostics.Process.Start("https://github.com/cjhdevact/IBoard/issues")
     End Sub
 
-    Private Sub LinkLabel4_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
+    Private Sub LinkLabel4_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
         'GPLForm.TextBox1.ScrollBars = ScrollBars.Both
         GPLForm.TextBox1.Text = My.Resources.GPL3
         'GPLForm.TextBox1.WordWrap = False
@@ -306,7 +338,7 @@ Public Class prms
         GPLForm.ShowDialog()
     End Sub
 
-    Private Sub LinkLabel3_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
+    Private Sub LinkLabel3_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
         'GPLForm.TextBox1.ScrollBars = ScrollBars.Vertical
         GPLForm.TextBox1.Text = My.Resources.DocText
         'GPLForm.TextBox1.WordWrap = True
@@ -315,7 +347,7 @@ Public Class prms
         GPLForm.ShowDialog()
     End Sub
 
-    Private Sub CheckBox4_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox4.CheckedChanged
+    Private Sub CheckBox4_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox4.CheckedChanged
         If CheckBox4.Checked = False Then
             pfrm.PictureBox1.AllowDrop = False
             If pfrm.UnSaveData = 0 Then
@@ -329,7 +361,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub Button8_Click(sender As System.Object, e As System.EventArgs) Handles Button8.Click
+    Private Sub Button8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button8.Click
         If MessageBox.Show("确定要恢复默认设置吗？" & vbCrLf & "执行该操作会删除本机图片展示小工具的自定义设置，此操作无法撤销。" & vbCrLf & vbCrLf & "你确定要继续吗？", "图片展示小工具 - 恢复默认设置警告", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) = Windows.Forms.DialogResult.Yes Then
             If pfrm.UnSaveData = 0 Then
                 RegKeyModule.DelKey("Software\CJH\IBoard", True, "HKCU")
@@ -339,7 +371,7 @@ Public Class prms
         End If
     End Sub
 
-    Private Sub CheckBox5_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox5.CheckedChanged
+    Private Sub CheckBox5_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox5.CheckedChanged
         If CheckBox5.Checked = False Then
             pfrm.SaveLoc = 0
             If pfrm.UnSaveData = 0 Then
@@ -349,6 +381,18 @@ Public Class prms
             pfrm.SaveLoc = 1
             If pfrm.UnSaveData = 0 Then
                 AddReg("Software\CJH\IBoard\Settings", "SaveLocations", 1, RegistryValueKind.DWord, "HKCU")
+            End If
+        End If
+    End Sub
+
+    Private Sub CheckBox6_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox6.CheckedChanged
+        If CheckBox6.Checked = False Then
+            If pfrm.UnSaveData = 0 Then
+                AddReg("Software\CJH\IBoard\Settings", "GetUIAccess", 0, RegistryValueKind.DWord, "HKCU")
+            End If
+        Else
+            If pfrm.UnSaveData = 0 Then
+                AddReg("Software\CJH\IBoard\Settings", "GetUIAccess", 1, RegistryValueKind.DWord, "HKCU")
             End If
         End If
     End Sub

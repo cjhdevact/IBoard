@@ -183,6 +183,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="IBoard.ico" />
+    <None Include="lib\UIAccessHelper64.dll" />
+    <None Include="lib\UIAccessHelper.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

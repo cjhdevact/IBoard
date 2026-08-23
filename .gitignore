@@ -2,7 +2,9 @@
 
 /Src/*.suo
 
-/Src/IBoard-bin/
+/Tools/IBoard-Bin/
+
+/Tools/IBoard*-Bin*
 
 /Src/IBoard/bin/
 
